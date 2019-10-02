@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:software_engineer/page.dart';
 
 Widget _login() {
   return Container(
@@ -91,7 +92,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                     ),
-                    _signInButton(),
+                    _signInButton(context),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                     ),
@@ -100,10 +101,15 @@ class _LoginState extends State<Login> {
   }
 }
 
-Widget _signInButton() {
+Widget _signInButton(BuildContext context) {
   return OutlineButton(
     splashColor: Colors.grey,
-    onPressed: () {},
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => mainPage()),
+      );
+    },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
     highlightElevation: 0,
     borderSide: BorderSide(color: Colors.grey),
