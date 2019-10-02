@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineer/welcome_screen.dart';
+import 'package:software_engineer/login.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,18 +8,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(
-          textTheme: TextTheme(
-            body1: TextStyle(color: Colors.white),
-          ),
+      debugShowCheckedModeBanner: false,
+      title: "Flutter Messenger",
+      theme: ThemeData.dark().copyWith(
+        textTheme: TextTheme(
+          body1: TextStyle(color: Colors.white),
         ),
-        home: WelcomeScreen()
-        //initialRoute: WelcomeScreen.id,
-        //routes: {
-        // WelcomeScreen.id: (context) => WelcomeScreen(),
-        //LoginScreen.id: (context) => LoginScreen(),
-        // RegisterScreen.id: (context) => RegisterScreen(),
-        );
+      ),
+      home: Login(),
+    );
   }
 }

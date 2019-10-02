@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Color_scheme.dart';
 
 class mainPage extends StatefulWidget {
   @override
@@ -10,7 +9,7 @@ class mainPage extends StatefulWidget {
 
 class _mainPage extends State<mainPage> {
   int _page = 0;
-  PageController _pageController;
+  //PageController _pageController;
   final List<Widget> _children = [
     //PlaceholderWidget(Colors.white),
     //Text('In the Home Category'),
@@ -19,20 +18,19 @@ class _mainPage extends State<mainPage> {
         alignment: Alignment.topLeft,
         child: Text("This is the main page"),
       ),
-      color: Colors.lightBlue,
+      //color: Colors.lightBlue,
     ),
-    Color_scheme(Colors.cyan),
-    //Center(
-    //child: Container(
-    //color: Color.fromARGB(255, 66, 165, 245),
-    //alignment: Alignment.topLeft,
-    //child: Container(
-    //color: Colors.blueAccent,
-    //child: Text("This is where posts will go"),
-    //constraints: BoxConstraints.expand(height: 75.0),
-    //),
-    //),
-    //),
+    Center(
+      child: Container(
+        color: Color.fromARGB(255, 66, 165, 245),
+        alignment: Alignment.topLeft,
+        child: Container(
+          color: Colors.blueAccent,
+          child: Text("This is where posts will go"),
+          constraints: BoxConstraints.expand(height: 75.0),
+        ),
+      ),
+    ),
     Container(
       //margin: EdgeInsets.symmetric(vertical: 20.0),
       //height: 200.0,
