@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Flutter Messenger",
       theme: ThemeData.dark().copyWith(
-        textTheme: TextTheme(
-          body1: TextStyle(color: Colors.white),
-        ),
+        primaryColor: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.black45,
+        accentColor: Colors.white,
       ),
-      home: Login(),
+      home: LoginPage(),
     );
   }
 }

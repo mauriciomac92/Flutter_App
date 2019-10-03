@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineer/page.dart';
+import 'package:software_engineer/MessagePage.dart';
+//import 'package:software_engineer/MessagePage.dart';
 
 Widget _login() {
   return Container(
@@ -57,22 +58,22 @@ Widget _logout() {
           )));
 }
 
-class Login extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  LoginState createState() => LoginState();
 }
 
-class _LoginState extends State<Login> {
+class LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         body: Center(
             child: Container(
           color: Colors.white,
           child: Padding(
-              padding: const EdgeInsets.all(36.0),
+              padding: const EdgeInsets.all(30.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -107,7 +108,7 @@ Widget _signInButton(BuildContext context) {
     onPressed: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => mainPage()),
+        MaterialPageRoute(builder: (context) => MessagePage()),
       );
     },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
@@ -126,7 +127,7 @@ Widget _signInButton(BuildContext context) {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Sign in with Google',
+                'Sign in',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.orangeAccent,
