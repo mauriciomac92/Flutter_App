@@ -2,6 +2,10 @@
 
 The Main purposer for this app is to connect every person in the fullerton area with each other. Everyone using this app will find out more activites to do in the Fullerton area. 
 
+
+-Marcos Reyes
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
