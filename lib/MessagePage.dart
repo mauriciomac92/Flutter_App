@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/messagejUI.dart';
-import 'package:software_engineer/page.dart';
+import 'package:software_engineer/PageLayout.dart';
 
 class MessagePage extends StatefulWidget {
   @override
@@ -18,7 +18,6 @@ class MessageState extends State<MessagePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            tooltip: 'show',
             onPressed: () {
               Navigator.push(
                 context,
@@ -27,8 +26,7 @@ class MessageState extends State<MessagePage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.error),
-            tooltip: 'show',
+            icon: Icon(Icons.remove),
             onPressed: () {
               Navigator.push(
                 context,
@@ -50,9 +48,7 @@ class MessageState extends State<MessagePage> {
                 ),
                 ListTile(
                   leading: CircleAvatar(
-                    radius: 24.0,
-                    backgroundImage:
-                        AssetImage('assets/images/fullerton_logo.png'),
+                    child: Text(_model.letter),
                   ),
                   title: Row(
                     children: <Widget>[
