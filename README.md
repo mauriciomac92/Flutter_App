@@ -5,7 +5,7 @@ The Main purposer for this app is to connect every person in the fullerton area 
 Member
 -Marcos Reyes
 -Mauricio Macias
-
+-Hung Cun
 
 ## Getting Started
 
