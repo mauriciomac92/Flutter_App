@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineer/MessagePage.dart';
+import 'package:software_engineer/page.dart';
 //import 'package:software_engineer/MessagePage.dart';
 
 Widget _login() {
@@ -108,7 +108,7 @@ Widget _signInButton(BuildContext context) {
     onPressed: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MessagePage()),
+        MaterialPageRoute(builder: (context) => mainPage()),
       );
     },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),

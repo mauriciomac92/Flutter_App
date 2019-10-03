@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:software_engineer/MessagePage.dart';
 
 class mainPage extends StatefulWidget {
   @override
@@ -13,13 +14,6 @@ class _mainPage extends State<mainPage> {
   final List<Widget> _children = [
     //PlaceholderWidget(Colors.white),
     //Text('In the Home Category'),
-    Container(
-      child: Align(
-        alignment: Alignment.topLeft,
-        child: Text("This is the main page"),
-      ),
-      //color: Colors.lightBlue,
-    ),
     Center(
       child: Container(
         color: Color.fromARGB(255, 66, 165, 245),
@@ -31,6 +25,7 @@ class _mainPage extends State<mainPage> {
         ),
       ),
     ),
+    MessagePage(),
     Container(
       //margin: EdgeInsets.symmetric(vertical: 20.0),
       //height: 200.0,
@@ -69,15 +64,6 @@ class _mainPage extends State<mainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Fullerton Messenger'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: _children[_page], // new
       bottomNavigationBar: BottomNavigationBar(
         onTap: Tapped, // new
