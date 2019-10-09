@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/MessagePage.dart';
+import 'package:software_engineer/ProfilePage.dart';
+import 'package:software_engineer/PostsPage.dart';
 
 class mainPage extends StatefulWidget {
   @override
@@ -12,58 +14,22 @@ class _mainPage extends State<mainPage> {
   int _page = 0;
   //PageController _pageController;
   final List<Widget> _children = [
-    //PlaceholderWidget(Colors.white),
-    //Text('In the Home Category'),
-    Center(
-      child: Container(
-        color: Color.fromARGB(255, 66, 165, 245),
-        alignment: Alignment.topLeft,
-        child: Container(
-          color: Colors.blueAccent,
-          child: Text("This is where posts will go"),
-          constraints: BoxConstraints.expand(height: 75.0),
-        ),
-      ),
-    ),
+    Profile(),
     MessagePage(),
-    Container(
-      //margin: EdgeInsets.symmetric(vertical: 20.0),
-      //height: 200.0,
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          Container(
-            //alignment: Alignment.topLeft,
-            height: 250.0,
-            color: Colors.red,
-          ),
-          Container(
-            //alignment: Alignment.center,
-            height: 250.0,
-            color: Colors.blue,
-          ),
-          Container(
-            //alignment: Alignment.bottomCenter,
-            height: 250.0,
-            color: Colors.green,
-          ),
-          Container(
-            //alignment: Alignment.topLeft,
-            height: 250.0,
-            color: Colors.yellow,
-          ),
-          Container(
-            //alignment: Alignment.topLeft,
-            height: 250.0,
-            color: Colors.orange,
-          ),
-        ],
-      ),
-    ),
+    PostsPage(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Fullerton Messenger'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: _children[_page], // new
       bottomNavigationBar: BottomNavigationBar(
         onTap: Tapped, // new
