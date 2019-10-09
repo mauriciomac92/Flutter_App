@@ -93,33 +93,35 @@ class _PostsPage extends State<PostsPage> {
                         ],
                       ),
                     ),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(0.0, 12.0, 12.0, 0.0),
-                            child: Text(
-                              "User/Club # $index",
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline),
+                    new Flexible(
+                      child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 12.0, 12.0, 0.0),
+                              child: Text(
+                                "User/Club # $index",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline),
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding:
-                                const EdgeInsets.fromLTRB(0.0, 10.0, 12.0, 6.0),
-                            width: 300.0,
-                            child: new Column(
-                              children: <Widget>[
-                                new Text(
-                                    "This is where posts will gooooooooooo fbegbhegherkghkjerwhg wekrhgfkwjerhgkwrehg rgkherwkghwe",
-                                    textAlign: TextAlign.left),
-                              ],
-                            ),
-                          )
-                        ]),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 10.0, 12.0, 6.0),
+                              width: 300.0,
+                              child: new Column(
+                                children: <Widget>[
+                                  new Text(
+                                      "This is where posts will gooooooooooo fbegbhegherkghkjerwhg wekrhgfkwjerhgkwrehg rgkherwkghwe",
+                                      textAlign: TextAlign.left),
+                                ],
+                              ),
+                            )
+                          ]),
+                    )
                   ],
                 ),
                 Divider(
@@ -141,3 +143,4 @@ class _PostsPage extends State<PostsPage> {
     });
   }
 }
+
