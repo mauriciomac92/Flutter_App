@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:software_engineer/MessagePage.dart';
+import 'package:software_engineer/PageLayout.dart';
 
 class PostsPage extends StatefulWidget {
   @override
@@ -62,6 +64,27 @@ class _PostsPage extends State<PostsPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Post'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => mainPage()),
+              );
+            },
+          )
+        ],
+      ),
       body: ListView.builder(
         itemCount: post.length + 1,
         itemBuilder: (context, index) {
@@ -143,4 +166,3 @@ class _PostsPage extends State<PostsPage> {
     });
   }
 }
-

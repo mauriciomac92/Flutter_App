@@ -23,7 +23,7 @@ class _mainPage extends State<mainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('Fullerton Messenger'),
         leading: IconButton(
           icon: const Icon(Icons.menu),
@@ -31,7 +31,7 @@ class _mainPage extends State<mainPage> {
             Navigator.pop(context);
           },
         ),
-      ),
+      )*/
       body: _children[_page], // new
       bottomNavigationBar: BottomNavigationBar(
         onTap: Tapped, // new
