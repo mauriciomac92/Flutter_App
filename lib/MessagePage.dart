@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/messagejUI.dart';
 import 'package:software_engineer/PageLayout.dart';
+//import 'package:software_engineer/ProfilePage.dart';
 
 class MessagePage extends StatefulWidget {
   @override
@@ -13,8 +14,17 @@ class MessageState extends State<MessagePage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Messages'),
-        leading: Icon(Icons.settings),
+        leading: IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => mainPage()),
+            );
+          },
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -63,6 +73,12 @@ class MessageState extends State<MessagePage> {
                     Icons.arrow_forward_ios,
                     size: 14.0,
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => mainPage()),
+                    );
+                  },
                 ),
               ],
             );

@@ -14,7 +14,7 @@ class _mainPage extends State<mainPage> {
   int _page = 0;
   //PageController _pageController;
   final List<Widget> _children = [
-    Profile(),
+    ProfilePage(),
     MessagePage(),
     PostsPage(),
   ];

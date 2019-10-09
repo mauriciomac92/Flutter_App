@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/LoginPage.dart';
-//import 'package:software_engineer/ProfilePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: "Flutter Messenger",
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.blueGrey,
-        scaffoldBackgroundColor: Colors.black45,
+        scaffoldBackgroundColor: Colors.grey[20],
         accentColor: Colors.white,
       ),
       home: LoginPage(),

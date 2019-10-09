@@ -6,7 +6,17 @@ class ChatModel {
   ChatModel({this.name, this.message, this.letter});
 
   static final List<ChatModel> dummyData = [
-    ChatModel(name: "mauricio", message: "hello dude", letter: 'M'),
+    ChatModel(name: "mauricio", message: "hello dude", letter: "n"),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
+    ChatModel(name: "bro", message: "no", letter: 'B'),
     ChatModel(name: "bro", message: "no", letter: 'B'),
   ];
 }

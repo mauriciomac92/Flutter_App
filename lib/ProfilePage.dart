@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-
-class _Profile extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  ProfileState createState() => ProfileState();
 }
-class _ProfileState extends State<_Profile> {
+
+class ProfileState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        //backgroundColor: Colors.blue,
         title: Text('Profile'),
       ),
       body: Container(
-        color: Colors.teal,
+        //color: Colors.teal,
         child: ListView(children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: 4.0),
