@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/MessagePage.dart';
 import 'package:software_engineer/ProfilePage.dart';
-import 'package:software_engineer/PostsPage.dart';
+import 'package:software_engineer/PostPage.dart';
 
 class mainPage extends StatefulWidget {
   @override
