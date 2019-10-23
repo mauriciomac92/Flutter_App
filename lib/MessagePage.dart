@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/messagejUI.dart';
 import 'package:software_engineer/PageLayout.dart';
-//import 'package:software_engineer/ProfilePage.dart';
+import 'package:software_engineer/sign_in.dart';
 
 class MessagePage extends StatefulWidget {
   @override
@@ -68,7 +68,7 @@ class MessageState extends State<MessagePage> {
                       ),
                     ],
                   ),
-                  subtitle: Text(_model.message),
+                  subtitle: Text(_model.name),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
                     size: 14.0,

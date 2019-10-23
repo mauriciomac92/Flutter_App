@@ -1,76 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/PageLayout.dart';
-
-Widget _login() {
-  return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.all(Radius.circular(90)),
-      ),
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                style: TextStyle(color: Colors.black45),
-                obscureText: false,
-                decoration: InputDecoration(
-                  hintText: "E-mail",
-                  hintStyle: TextStyle(color: Colors.black45),
-                  icon: Icon(
-                    Icons.mail_outline,
-                    color: Colors.black,
-                  ),
-                ),
-              )
-            ],
-          )));
-}
-
-Widget _logout() {
-  return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.all(Radius.circular(90)),
-      ),
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                style: TextStyle(color: Colors.black45),
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  hintStyle: TextStyle(color: Colors.black45),
-                  icon: Icon(
-                    Icons.lock,
-                    color: Colors.black,
-                  ),
-                ),
-              )
-            ],
-          )));
-}
+import 'package:software_engineer/firebase_google_signin.dart';
+import 'package:software_engineer/sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   @override
-  LoginState createState() => LoginState();
+  LoginState createState() =>
+      LoginState(); // => short for: {return LoginState()}
 }
 
 class LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
-        //backgroundColor: Colors.white,
+        resizeToAvoidBottomPadding: true,
         body: Center(
             child: Container(
-          color: Colors.white,
+          color: Colors.grey,
           child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
@@ -84,56 +30,47 @@ class LoginState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                     ),
-                    _login(),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                    ),
-                    _logout(),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                    ),
-                    _signInButton(context),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                    ),
+                    OutlineButton(
+                        splashColor: Colors.white,
+                        onPressed: () {
+                          /* original push without google sign */
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      LoginScreen())); //mainpage
+                          /* with google sign in
+                          signInWithGoogle().whenComplete(() {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return mainPage();
+                              }),
+                            );
+                          }); */
+                        },
+                        borderSide: BorderSide(color: Colors.black),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/images/google_logo.png',
+                              height: 45.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                'Sign In With Google',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
                   ])),
         )));
   }
-}
-
-Widget _signInButton(BuildContext context) {
-  return OutlineButton(
-    splashColor: Colors.grey,
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => mainPage()),
-      );
-    },
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-    highlightElevation: 0,
-    borderSide: BorderSide(color: Colors.grey),
-    child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              'assets/images/google_logo.png',
-              height: 35.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign in',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.orangeAccent,
-                ),
-              ),
-            )
-          ],
-        )),
-  );
 }
