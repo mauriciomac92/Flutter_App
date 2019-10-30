@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineer/LoginPage.dart';
-import 'package:software_engineer/firebase_google_signin.dart';
+import 'package:software_engineer/GoogleLogin.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +15,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey[20],
         accentColor: Colors.white,
       ),
-      home: LoginWithGoogle(),
+      home: StreamBuilder<Object>(
+          stream: null,
+          builder: (context, snapshot) {
+            return GoogleLogin();
+          }),
     );
   }
 }

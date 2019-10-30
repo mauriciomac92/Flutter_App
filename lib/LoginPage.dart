@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineer/PageLayout.dart';
-import 'package:software_engineer/firebase_google_signin.dart';
-import 'package:software_engineer/sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,8 +35,7 @@ class LoginState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      LoginScreen())); //mainpage
+                                  builder: (context) => mainPage())); //mainpage
                           /* with google sign in
                           signInWithGoogle().whenComplete(() {
                             Navigator.of(context).push(
