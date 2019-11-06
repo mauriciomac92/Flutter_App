@@ -1,29 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:testlogin/welcomeScreen.dart';
-import 'welcomeScreen.dart';
+import 'package:testlogin/PageLayout.dart';
+import 'package:testlogin/loginPage.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // Widget _getScreenId(){
-  //   return StreamBuilder<FirebaseUser>(
-  //     stream: FirebaseAuth.instance.onAuthStateChanged,
-  //     builder: (BuildContext context, snapshot){
-  //       if(snapshot.hasData){
-  //         return Layout();
-  //       }
-  //       else{
-  //         return WelcomePage();
-  //       }
-  //     },
-  //   );
-  // }
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
+          debugShowCheckedModanner: false,
           title: 'Flutter Messenger',
           theme: ThemeData.dark().copyWith(
             primaryColor: Colors.blueGrey,
@@ -34,12 +20,11 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.onAuthStateChanged,
             builder: (BuildContext context, snapshot){
               if(snapshot.hasData){
-              return WelcomePage();
+              return MainPage();
               } else {
-                return WelcomePage();
+                return LoginPage();
               }
-            }),         
+            }),    
     );
   }
 }
-
