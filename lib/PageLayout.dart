@@ -1,38 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineer/MessagePage.dart';
-import 'package:software_engineer/ProfilePage.dart';
-import 'package:software_engineer/PostPage.dart';
+import 'package:testlogin/mess.dart';
 
-class mainPage extends StatefulWidget {
+import 'MessagePage.dart';
+import 'PostsPage.dart';
+import 'ProfilePage.dart';
+import 'chat.dart';
+
+class MainPage extends StatefulWidget {
+  final String userId;
+  MainPage({this.userId});
+    // This widget is the root of your application.
   @override
-  State<StatefulWidget> createState() {
-    return _mainPage();
-  }
+  State<StatefulWidget> createState() => _MainPage();
 }
 
-// add comment
-// add another comment
-class _mainPage extends State<mainPage> {
-  int _page = 0;
-  //PageController _pageController;
+class _MainPage extends State<MainPage> {
+int _page = 0;
+//PageController _pageController;
   final List<Widget> _children = [
     ProfilePage(),
-    MessagePage(),
+    ChatScreen(),
     PostsPage(),
   ];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      /*appBar: AppBar(
-        title: Text('Fullerton Messenger'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      )*/
-      body: _children[_page], // new
+
+@override
+Widget build(BuildContext context){
+  return Scaffold(
+    body: _children[_page], // new
       bottomNavigationBar: BottomNavigationBar(
         onTap: Tapped, // new
         currentIndex: _page, // new
@@ -49,8 +43,8 @@ class _mainPage extends State<mainPage> {
               icon: Icon(Icons.dashboard), title: Text('Posts'))
         ],
       ),
-    );
-  }
+  );
+}
 
   void Tapped(int page) {
     setState(() {
