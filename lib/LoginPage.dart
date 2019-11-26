@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:testlogin/auth.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'nextPage.dart';
+import 'package:testlogin/registerPage.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginPage extends StatefulWidget {
-    static final String id = 'Login_Page';
   // This widget is the root of your application.
   @override
   State<StatefulWidget> createState() => _LoginPageState();
@@ -18,8 +16,6 @@ String _password;
 void _submit(){
   if(formKey.currentState.validate()){
     formKey.currentState.save();
-    // print(_email);
-    // print(_password);
     Auth.login(_email, _password);
   }
 }
@@ -34,9 +30,20 @@ void _submit(){
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "Login In"
-                ),
+                Image.asset(
+                    'assets/images/fullerton_logo.png',
+                    height: 150.0,
+                  ),
+                  SizedBox(
+                    child: TypewriterAnimatedTextKit(
+                     text: ['Log In'],
+                     textStyle: TextStyle(
+                       fontSize: 30.0,
+                       fontWeight: FontWeight.bold,
+                     ),
+                     textAlign: TextAlign.start,
+                    ),
+                  ),
                 Form(key: formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -58,16 +65,24 @@ void _submit(){
                         obscureText: true,
                       ),
                     ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: FlatButton(
+                    OutlineButton(
                         onPressed: _submit,
                         child: Text(
                           'Login',
                         ),
-
                       ),
-                    )
+                    SizedBox(height: 40.0,),
+                    OutlineButton(
+                      onPressed: (){
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterPage()),);
+                      },
+                      child: Text(
+                        'REGISTER',
+                      ),
+                      borderSide: BorderSide(color: Colors.blue),
+                      shape: StadiumBorder(),
+                      splashColor: Colors.white,
+                    ),
                   ],
                 ))
               ],
@@ -77,4 +92,3 @@ void _submit(){
         );
     }
 }
-
