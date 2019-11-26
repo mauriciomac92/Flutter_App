@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'auth.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class RegisterPage extends StatefulWidget {
   // This widget is the root of your application.
@@ -17,10 +16,6 @@ String _email, _password, _username;
 _submit(){
   if(formKey.currentState.validate()){
     formKey.currentState.save();
-    // print(_email);
-    // print(_password);
-    // print(_username);
-    // logging in the user with Firebase
     Auth.signUpUser(context, _username, _email, _password);
   }
 }
@@ -35,9 +30,20 @@ _submit(){
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "Register"
-                ),
+                Image.asset(
+                    'assets/images/fullerton_logo.png',
+                    height: 150.0,
+                  ),
+                SizedBox(
+                    child: TypewriterAnimatedTextKit(
+                     text: ['Register'],
+                     textStyle: TextStyle(
+                       fontSize: 80.0,
+                       fontWeight: FontWeight.bold,
+                     ),
+                     textAlign: TextAlign.start,
+                    ),
+                  ),
                 Form(key: formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -71,7 +77,7 @@ _submit(){
                     ),
                     SizedBox(height: 20.0),
                     Container(
-                      child: FlatButton(
+                      child: OutlineButton(
                         onPressed: _submit,
                         child: Text(
                           'Register',
