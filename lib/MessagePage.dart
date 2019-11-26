@@ -1,90 +1,115 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:software_engineer/messagejUI.dart';
-import 'package:software_engineer/PageLayout.dart';
-import 'package:software_engineer/sign_in.dart';
+import 'auth.dart';
+import 'PageLayout.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MessagePage extends StatefulWidget {
+class ChatScreen extends StatefulWidget{
   @override
-  MessageState createState() => MessageState();
+  ChatScreenPage createState() => ChatScreenPage();
 }
 
-class MessageState extends State<MessagePage> {
-  @override
-  Widget build(BuildContext context) {
+class ChatScreenPage extends State<ChatScreen>{
+  final messageTextController = TextEditingController();
+  @override 
+   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        centerTitle: true,
-        title: Text('Messages'),
+        title: Text('Chat'),
         leading: IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => mainPage()),
-            );
-          },
+          icon: Icon(Icons.exit_to_app),
+          onPressed: () { Auth.logout(); },
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => mainPage()),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.remove),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => mainPage()),
-              );
-            },
-          )
-        ],
       ),
       body: Container(
-        child: ListView.builder(
-          itemCount: ChatModel.dummyData.length,
-          itemBuilder: (context, index) {
-            ChatModel _model = ChatModel.dummyData[index];
-            return Column(
-              children: <Widget>[
-                Divider(
-                  height: 12.0,
-                ),
-                ListTile(
-                  leading: CircleAvatar(
-                    child: Text(_model.letter),
-                  ),
-                  title: Row(
-                    children: <Widget>[
-                      Text(_model.name),
-                      SizedBox(
-                        width: 16.0,
-                      ),
-                    ],
-                  ),
-                  subtitle: Text(_model.name),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 14.0,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => mainPage()),
-                    );
-                  },
-                ),
-              ],
-            );
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            MessaageStream(),
+            TextField(
+              
+            )
+          ],
         ),
       ),
+    );
+  }
+}
+
+class MessaageStream extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('messages').snapshots(),
+      builder: (context,snapshot){
+        if(!snapshot.hasData){
+          return Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.green,
+            ),
+          );
+        }
+        else{
+          final messages = snapshot.data.documents;
+          List<MessageBubble> messageBubbles = [];
+          for (var message in messages) {
+            final messageText = message.data['text'];
+            final messageSender = message.data['sender'];
+
+            final messageBubble = MessageBubble(
+              sender: messageSender, 
+              text: messageText,);
+    
+            messageBubbles.add(messageBubble);
+          }
+          return Expanded( // use this cause listview will take all the screen
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 20.0),
+              children: messageBubbles,
+            )
+          );
+        }
+      });
+  }
+}
+    
+class MessageBubble extends StatelessWidget{
+
+  MessageBubble({this.sender, this.text});
+
+  final String sender;
+  final String text;
+
+  @override
+  Widget build(BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(sender,
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.white30,
+            ),),
+            Material(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0)),
+              elevation: 5.0,
+              color: Colors.pink,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
+                child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 15.0,
+                ),),
+              )
+            ),
+          ],
+        ),
+      
     );
   }
 }
