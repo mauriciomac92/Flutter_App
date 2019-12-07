@@ -41,7 +41,7 @@ class LoginGoogle extends State<GoogleLogin> {
           {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => mainPage()),
+              MaterialPageRoute(builder: (context) => MainPage()),
             );
           }
         }
@@ -61,7 +61,6 @@ class LoginGoogle extends State<GoogleLogin> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Scaffold(
       appBar: AppBar(
         title: Text('Flutter login demo'),

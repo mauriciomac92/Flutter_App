@@ -1,54 +1,92 @@
 import 'package:flutter/material.dart';
-import 'package:testlogin/mess.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'MessagePage.dart';
-import 'PostsPage.dart';
+import 'PostPage.dart';
 import 'ProfilePage.dart';
-import 'chat.dart';
+import 'package:provider/provider.dart';
+import 'User_data.dart';
+import 'SearchPage.dart';
 
 class MainPage extends StatefulWidget {
   final String userId;
   MainPage({this.userId});
+  final String id = 'main_page';
     // This widget is the root of your application.
   @override
   State<StatefulWidget> createState() => _MainPage();
 }
 
 class _MainPage extends State<MainPage> {
-int _page = 0;
-//PageController _pageController;
-  final List<Widget> _children = [
-    ProfilePage(),
-    ChatScreen(),
-    PostsPage(),
-  ];
+  int _currentTab = 0;
+  PageController _pageController;
 
-@override
-Widget build(BuildContext context){
-  return Scaffold(
-    body: _children[_page], // new
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: Tapped, // new
-        currentIndex: _page, // new
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final String currentUserId = Provider.of<UserData>(context).currentUserId;
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        children: <Widget>[
+          PostsPage(),
+          SearchPage(),
+          ChatScreen(),
+          ProfilePage(
+            currentUserId: currentUserId,
+            userId: currentUserId,
+          ),
+        ],
+        onPageChanged: (int index) {
+          setState(() {
+            _currentTab = index;
+          });
+        },
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: _currentTab,
+        onTap: (int index) {
+          setState(() {
+            _currentTab = index;
+          });
+          _pageController.animateToPage(
+            index,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeIn,
+          );
+        },
+        activeColor: Colors.black,
         items: [
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.mood),
-            title: Text('Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              size: 32.0,
+            ),
           ),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            title: Text('Messages'),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              size: 32.0,
+            ),
           ),
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard), title: Text('Posts'))
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.photo_camera,
+              size: 32.0,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+              size: 32.0,
+            ),
+          ),
         ],
       ),
-  );
-}
-
-  void Tapped(int page) {
-    setState(() {
-      _page = page;
-    });
+    );
   }
 }

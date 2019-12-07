@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:testlogin/auth.dart';
-import 'package:testlogin/registerPage.dart';
+import 'auth.dart';
+import 'register.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginPage extends StatefulWidget {
   // This widget is the root of your application.
+  static final String id = 'Login_Page';
+
   @override
   State<StatefulWidget> createState() => _LoginPageState();
 }
@@ -74,7 +76,7 @@ void _submit(){
                     SizedBox(height: 40.0,),
                     OutlineButton(
                       onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterPage()),);
+                        Navigator.pushNamed(context,RegisterPage.id);
                       },
                       child: Text(
                         'REGISTER',

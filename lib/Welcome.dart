@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testlogin/loginPage.dart';
-import 'package:testlogin/registerPage.dart';
+import 'register.dart';
+import 'LoginPage.dart';
 
 class WelcomePage extends StatefulWidget {
   static final String id = 'Welcome_Paga';

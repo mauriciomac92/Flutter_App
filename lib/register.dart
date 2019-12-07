@@ -13,7 +13,7 @@ class _RegisterPageState extends State<RegisterPage> {
 final formKey = GlobalKey<FormState>();
 String _email, _password, _username;
 
-_submit(){
+_submit() {
   if(formKey.currentState.validate()){
     formKey.currentState.save();
     Auth.signUpUser(context, _username, _email, _password);
