@@ -74,7 +74,7 @@ void _submit(){
                     SizedBox(height: 40.0,),
                     OutlineButton(
                       onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterPage()),);
+                        Navigator.pushNamed(context,RegisterPage.id);
                       },
                       child: Text(
                         'REGISTER',
