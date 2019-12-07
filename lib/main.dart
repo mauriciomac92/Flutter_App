@@ -41,11 +41,6 @@ class MyApp extends StatelessWidget {
           )
         ),
         home: _getScreenId(),
-        routes: {
-          LoginPage.id: (context) => LoginPage(),
-          RegisterPage.id: (context) => RegisterPage(),
-          PostsPage.id: (context) => PostsPage(),
-        },
       ),
     );
   }
