@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testlogin/auth.dart';
-import 'package:testlogin/registerPage.dart';
+import 'auth.dart';
+import 'register.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginPage extends StatefulWidget {
