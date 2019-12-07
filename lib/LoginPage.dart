@@ -5,6 +5,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginPage extends StatefulWidget {
   // This widget is the root of your application.
+    static final String id = 'Login_Page';
+
   @override
   State<StatefulWidget> createState() => _LoginPageState();
 }
