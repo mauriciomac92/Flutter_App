@@ -8,6 +8,8 @@ final _firestore = Firestore.instance;
 
 class PostsPage extends StatefulWidget {
   @override
+    static final String id = 'Post_Page';
+
   _PostsPage createState() => _PostsPage();
 }
 
