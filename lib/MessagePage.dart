@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'progress.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 final userRef = Firestore.instance.collection('messages');
 FirebaseUser loggedInUser;
-//final int timestamp = DateTime.now().millisecondsSinceEpoch;
-final DateTime timestamp = DateTime.now();
-
 
 class ChatScreen extends StatefulWidget{
   @override
@@ -17,8 +15,22 @@ class ChatScreen extends StatefulWidget{
 
 class ChatScreenPage extends State<ChatScreen>{
   final messageTextController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   String messageText;
+
+  _submit() {
+    if(formKey.currentState.validate()){
+      formKey.currentState.save();
+      userRef.add({
+        'text': messageText,
+        'sender': loggedInUser.email,
+        'time': Timestamp.now(),
+       });
+      messageTextController.clear();
+    }
+  }
+
   @override
   void initState(){
     super.initState();
@@ -39,7 +51,8 @@ class ChatScreenPage extends State<ChatScreen>{
    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('no'),
+        title: Text('chat'),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () { Auth.logout(); },
@@ -51,35 +64,32 @@ class ChatScreenPage extends State<ChatScreen>{
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             MessaageStream(),
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: messageTextController,
-                      onChanged: (value){
-                        if(value == null) {value = messageText = ' ';}
-                        messageText = value;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter Message Here',
+            Form(key: formKey,
+              child: Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: TextFormField(
+                        controller: messageTextController,
+                        decoration: InputDecoration(
+                          labelText: 'Enter Message Here',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator:(input) => input.trim().isEmpty ? 'Can\'t send empty message':null,
+                        onChanged: (input) { 
+                          setState(() => messageText = input);
+                        } 
                       ),
                     ),
-                  ),
-                  FlatButton(
-                    onPressed: (){
-                      messageTextController.clear();
-                      userRef.add({
-                        'text': messageText,
-                        'sender': loggedInUser.email,
-                        'time': timestamp,
-                      });
-                      },
-                      child: Icon(Icons.send)
-                  )
-                ]
+                    FlatButton(
+                      onPressed: (){
+                        _submit();
+                        },
+                        child: Icon(Icons.send)
+                    )
+                  ]
+                ),
               ),
             ),
           ],
@@ -93,21 +103,23 @@ class MessaageStream extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return StreamBuilder<QuerySnapshot>(
-      stream: userRef.orderBy('time',descending: true).snapshots(),
+      stream: userRef.orderBy('time',descending: true).snapshots(),// messages show to bottom of the list
       builder: (context,snapshot){
         if(!snapshot.hasData){
           return linearProgress();
         }          
-          final messages = snapshot.data.documents.reversed; // messages show to bottom of the list
+          final messages = snapshot.data.documents;
           List<MessageBubble> messageBubbles = [];
           for (var message in messages) {
             final messageText = message.data['text'];
             final messageSender = message.data['sender'];
+            final messageTime = message.data['time'];
             final currentUser = loggedInUser.email;
 
             final messageBubble = MessageBubble(
               sender: messageSender, 
               text: messageText,
+              time: messageTime,
               isMe: currentUser == messageSender,
             );
 
@@ -126,10 +138,11 @@ class MessaageStream extends StatelessWidget{
     
 class MessageBubble extends StatelessWidget{
 
-  MessageBubble({this.sender, this.text, this.isMe});
+  MessageBubble({this.sender, this.text, this.time, this.isMe});
 
   final String sender;
   final String text;
+  final Timestamp time;
   final bool isMe;
 
   @override
@@ -166,7 +179,7 @@ class MessageBubble extends StatelessWidget{
               )
             ),
             Text(
-              '$timestamp'
+              timeago.format(time.toDate())
             ),
           ],
         ),
