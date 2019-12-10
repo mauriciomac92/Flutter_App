@@ -33,7 +33,10 @@ class _MainPage extends State<MainPage> {
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          PostsPage(),
+          PostsPage(            
+            currentUserId: currentUserId,
+            userId: currentUserId,
+          ),
           SearchPage(),
           ChatScreen(),
           ProfilePage(
