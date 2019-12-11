@@ -6,7 +6,6 @@ import 'edit_profile_page.dart';
 import 'DatabaseService.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
-import 'auth.dart';
 import 'MessagePage.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -87,6 +86,41 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  showMessage(User user) {
+    return user.id == Provider.of<UserData>(context).currentUserId
+        ? Container(
+      width: 200.0,
+      child: FlatButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => EditProfilePage(
+              user: user,
+            ),
+          ),
+        ),
+        color: Colors.green,
+        textColor: Colors.white,
+        child: Text(
+          'Edit Profile',
+          style: TextStyle(fontSize: 18.0),
+        ),
+      ),
+    )
+        : Container(
+      width: 200.0,
+      child: FlatButton(
+        onPressed: _followOrUnfollow,
+        color: isFollowing ? Colors.grey[200] : Colors.blue,
+        textColor: isFollowing ? Colors.black : Colors.white,
+        child: Text(
+          isFollowing ? 'Unfollow' : 'Follow',
+          style: TextStyle(fontSize: 18.0),
+        ),
+      ),
+    );
+  }
+
   _displayButton(User user) {
     return user.id == Provider.of<UserData>(context).currentUserId
         ? Container(
@@ -151,8 +185,8 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.exit_to_app),
-          onPressed: () { Auth.logout(); },
+          icon: Icon(Icons.arrow_back),
+          onPressed: () { Navigator.pop(context); },
         ),
         title: Text('Profile'),
         actions: <Widget>[
@@ -207,7 +241,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: Colors.grey,
                           fontSize: 18.0),
                     ),
+                    Padding(
+                    padding:EdgeInsets.all(5.0),
+                    child: Row(
+            children: <Widget> [
                     _displayButton(user),
+                    showMessage(user),
+            ]
+            ),
+                    ),
                     Padding(
                       padding: EdgeInsets.all(15.0),
                       child: Row(
