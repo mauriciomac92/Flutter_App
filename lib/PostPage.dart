@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:software_engineer/User.dart';
 import 'CreatePosts.dart';
 import 'constants.dart';
+import 'package:timeago/timeago.dart' as timeago;
+//import 'package:pull_to_refresh/pull_to_refresh.dart';
+//import 'progress.dart';
 
 final _firestore = Firestore.instance;
 
@@ -17,7 +20,6 @@ class PostsPage extends StatefulWidget {
 }
 
 class _PostsPage extends State<PostsPage> {
-
   User userhold;
   //final String currentUserId = currentUserId.id;
   void postsStream() async {
@@ -27,7 +29,7 @@ class _PostsPage extends State<PostsPage> {
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,10 +79,14 @@ class _PostsPage extends State<PostsPage> {
 }
 
 class PostsStream extends StatelessWidget {
+//  final RefreshController _refreshController = RefreshController();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('posts').snapshots(),
+        stream: _firestore
+            .collection('posts')
+            .orderBy('time', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -96,15 +102,25 @@ class PostsStream extends StatelessWidget {
             final postUser = post.data['user'];
             final postHandle = post.data['userHandle'];
             final postImage = post.data['imageUser'];
+            final postTime = post.data['time'];
 
             final postBorder = PostsBorder(
               user: postUser,
               text: postText,
               userHandle: postHandle,
               imageUser: postImage,
+              time: postTime,
             );
             postsBorders.add(postBorder);
           }
+          /*SmartRefresher(
+            controller: _refreshController,
+            enablePullUp: true,
+            enablePullDown: true,
+            onRefresh: () {
+              _PostsPage();
+            },
+          );*/
           return Expanded(
             child: ListView(
               children: postsBorders,
@@ -115,11 +131,15 @@ class PostsStream extends StatelessWidget {
 }
 
 class PostsBorder extends StatelessWidget {
-  PostsBorder({this.user, this.text, this.userHandle, this.imageUser});
+  PostsBorder(
+      {this.user, this.text, this.userHandle, this.imageUser, this.time});
   final String user;
   final String text;
   final String userHandle;
   final String imageUser;
+  final Timestamp time;
+
+  //var date = new DateTime.fromMillisecondsSinceEpoch(time * 1000);
 
   @override
   Widget build(BuildContext context) {
@@ -131,11 +151,13 @@ class PostsBorder extends StatelessWidget {
           color: Color.fromRGBO(21, 32, 43, 1.0),
           border: Border(bottom: BorderSide())),
       child: new Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           CircleAvatar(
             backgroundImage: NetworkImage(imageUser),
+            radius: 25.0,
+
             //'gs://fullertonmessenger.appspot.com/pikachu.jpg'),
             //'https://firebasestorage.googleapis.com/v0/b/fullertonmessenger.appspot.com/o/pikachu.jpg?alt=media&token=5c7f880b-a315-4a46-8405-1118a8a71bef'),
           ),
@@ -160,7 +182,7 @@ class PostsBorder extends StatelessWidget {
                         color: Colors.white, fontWeight: FontWeight.bold)),
                 Container(
                   margin: EdgeInsets.only(left: 5.0),
-                  child: Text(userHandle + " · 30m",
+                  child: Text(userHandle,
                       style: TextStyle(color: Colors.grey[400])),
                 )
               ],
@@ -168,6 +190,11 @@ class PostsBorder extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(top: 5.0),
                 child: Text(text, style: TextStyle(color: Colors.white))),
+            Container(
+              margin: EdgeInsets.only(top: 5.0),
+              child: Text(timeago.format(time.toDate()),
+                  style: TextStyle(color: Colors.grey[400])),
+            ),
           ],
         ),
       ),
