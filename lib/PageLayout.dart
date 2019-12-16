@@ -33,12 +33,11 @@ class _MainPage extends State<MainPage> {
       body: PageView(
         controller: _pageController,
         children: <Widget>[
+          MessagePage(),
           PostsPage(            
             currentUserId: currentUserId,
             userId: currentUserId,
           ),
-          SearchPage(),
-          ChatScreen(),
           ProfilePage(
             currentUserId: currentUserId,
             userId: currentUserId,
@@ -66,19 +65,13 @@ class _MainPage extends State<MainPage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home,
+              Icons.message,
               size: 32.0,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.search,
-              size: 32.0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.photo_camera,
+              Icons.people,
               size: 32.0,
             ),
           ),
@@ -88,6 +81,12 @@ class _MainPage extends State<MainPage> {
               size: 32.0,
             ),
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(
+          //     Icons.account_circle,
+          //     size: 32.0,
+          //   ),
+          // ),
         ],
       ),
     );
