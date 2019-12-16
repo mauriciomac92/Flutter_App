@@ -1,12 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:software_engineer/MessagePage.dart';
 import 'User_data.dart';
 import 'package:software_engineer/User.dart';
 import 'edit_profile_page.dart';
 import 'DatabaseService.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
-import 'ChatPage.dart';
+import 'PageLayout.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 
 class ProfilePage extends StatefulWidget {
   final String currentUserId;
@@ -86,7 +90,43 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  // showChat(User user){
+  //   user.id == Provider.of<UserData>(context).currentUserId
+  //   ? Container() : IconButton(
+  //     icon: Icon(Icons.message),
+  //     onPressed: () => Navigator.push(context, MaterialPageRoute(
+  //       builder: (_) => ChatScreen(
+  //         userId: user.id,
+  //         username: user.username,
+  //       ),
+  //     ),
+  //   ),
+  //   );
+  // }
 
+  addMessage(User user){
+    return user.id == Provider.of<UserData>(context).currentUserId
+    ? Container() : IconButton(
+      icon: Icon(Icons.message),
+      onPressed: () => addMessagePost(user)
+    );
+  }
+
+  addMessagePost(User user){
+      Firestore.instance.collection('friend')
+      .add({
+        'id': DateTime.now().millisecondsSinceEpoch,
+        'user1': Provider.of<UserData>(context).currentUserId,
+        'user2': user.id,
+        'email': user.email,
+        'time': Timestamp.now(),
+      });
+      Navigator.push(context, MaterialPageRoute(
+        builder: (_) => MainPage()
+      ),
+    );
+  }
+  
   _displayButton(User user) {
     return user.id == Provider.of<UserData>(context).currentUserId
         ? Container(
@@ -150,21 +190,19 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () { Navigator.pop(context); },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () { Navigator.pop(context); },
+        // ),
         title: Text('Profile'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.message),
-            onPressed: () {
-              Navigator.push( context,
-                MaterialPageRoute( builder: (context) => ChatScreen( )),
-              );
-            }
-          ),
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.message),
+        //     onPressed: () {
+        //     //addMessagePost();
+        //     }
+        //   ),
+        // ],
         centerTitle: true,
       ),
       body: FutureBuilder(
@@ -208,6 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontSize: 18.0),
                     ),
                     _displayButton(user),
+                    addMessage(user),
                     Padding(
                       padding: EdgeInsets.all(15.0),
                       child: Row(
