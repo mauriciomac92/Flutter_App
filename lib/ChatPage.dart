@@ -1,18 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:software_engineer/PageLayout.dart';
+import 'package:software_engineer/constants.dart';
 import 'auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'progress.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-final userRef = Firestore.instance.collection('messages');
+final messRef = Firestore.instance.collection('messages');
+final friRef = Firestore.instance.collection('friend');
 FirebaseUser loggedInUser;
 
 class ChatScreen extends StatefulWidget{
+  final String userId;
+  ChatScreen({this.userId});
   @override
   ChatScreenPage createState() => ChatScreenPage();
 }
-
 class ChatScreenPage extends State<ChatScreen>{
   final messageTextController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -22,7 +26,9 @@ class ChatScreenPage extends State<ChatScreen>{
   _submit() {
     if(formKey.currentState.validate()){
       formKey.currentState.save();
-      userRef.add({
+      messRef
+      .add({
+        'user': widget.userId,
         'text': messageText,
         'sender': loggedInUser.email,
         'time': Timestamp.now(),
@@ -51,11 +57,15 @@ class ChatScreenPage extends State<ChatScreen>{
    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('chat'),
+        title: Text('Chat'),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.exit_to_app),
-          onPressed: () { Auth.logout(); },
+          icon: Icon(Icons.home),
+          onPressed: () { 
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainPage()));
+          },
         ),
       ),
       body: Container(
@@ -77,9 +87,7 @@ class ChatScreenPage extends State<ChatScreen>{
                           border: OutlineInputBorder(),
                         ),
                         validator:(input) => input.trim().isEmpty ? 'Can\'t send empty message':null,
-                        onChanged: (input) { 
-                          setState(() => messageText = input);
-                        } 
+                        onChanged: (input) { messageText = input; }
                       ),
                     ),
                     FlatButton(
@@ -103,20 +111,25 @@ class MessaageStream extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return StreamBuilder<QuerySnapshot>(
-      stream: userRef.orderBy('time',descending: false).snapshots(),// messages show to bottom of the list
+      stream: messRef
+      .orderBy('time',descending: false)
+      .snapshots(),// messages show to bottom of the list
       builder: (context,snapshot){
         if(!snapshot.hasData){
           return linearProgress();
-        }          
+        }        
+        //if(){
           final messages = snapshot.data.documents;
           List<MessageBubble> messageBubbles = [];
           for (var message in messages) {
+            //final messageuser = message.data['user'];
             final messageText = message.data['text'];
             final messageSender = message.data['sender'];
             final messageTime = message.data['time'];
             final currentUser = loggedInUser.email;
 
             final messageBubble = MessageBubble(
+              //user: messageuser,
               sender: messageSender, 
               text: messageText,
               time: messageTime,
@@ -125,6 +138,7 @@ class MessaageStream extends StatelessWidget{
 
             messageBubbles.add(messageBubble);
           }
+        //}
           return Expanded( // use this cause listview will take all the screen
             child: ListView(
               physics: BouncingScrollPhysics(),
@@ -137,8 +151,8 @@ class MessaageStream extends StatelessWidget{
 }
     
 class MessageBubble extends StatelessWidget{
-  MessageBubble({this.sender, this.text, this.time, this.isMe});
-
+  MessageBubble({/*this.user,*/this.sender, this.text, this.time, this.isMe});
+  //final String user;
   final String sender;
   final String text;
   final Timestamp time;
