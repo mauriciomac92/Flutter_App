@@ -32,13 +32,13 @@ _submit() {
               children: <Widget>[
                 Image.asset(
                     'assets/images/fullerton_logo.png',
-                    height: 150.0,
+                    height: 45.0,
                   ),
                 SizedBox(
                     child: TypewriterAnimatedTextKit(
                      text: ['Register'],
                      textStyle: TextStyle(
-                       fontSize: 80.0,
+                       fontSize: 20.0,
                        fontWeight: FontWeight.bold,
                      ),
                      textAlign: TextAlign.start,
