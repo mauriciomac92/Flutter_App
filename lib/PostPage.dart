@@ -33,6 +33,7 @@ class _PostsPage extends State<PostsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Posts'),centerTitle: true,),
         body: FutureBuilder(
           future: usersRef.document(widget.userId).get(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -143,13 +144,13 @@ class PostsBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       //alignment: Alignment.topLeft,
-      padding: EdgeInsets.all(10.0),
+      //padding: EdgeInsets.all(10.0),
       //padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
-      decoration: BoxDecoration(
-          color: Color.fromRGBO(21, 32, 43, 1.0),
-          border: Border(bottom: BorderSide())),
+      //decoration: BoxDecoration(
+          //color: Color.fromRGBO(21, 32, 43, 1.0),
+          //border: Border(bottom: BorderSide())),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
