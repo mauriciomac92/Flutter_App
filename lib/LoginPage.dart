@@ -25,6 +25,7 @@ void _submit(){
     Widget build(BuildContext context) {
       return Scaffold(
         resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
@@ -34,13 +35,13 @@ void _submit(){
               children: <Widget>[
                 Image.asset(
                     'assets/images/fullerton_logo.png',
-                    height: 150.0,
+                    height: 80.0,
                   ),
                   SizedBox(
                     child: TypewriterAnimatedTextKit(
                      text: ['Log In'],
                      textStyle: TextStyle(
-                       fontSize: 30.0,
+                       fontSize: 15.0,
                        fontWeight: FontWeight.bold,
                      ),
                      textAlign: TextAlign.start,
